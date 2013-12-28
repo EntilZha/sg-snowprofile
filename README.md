@@ -1,7 +1,7 @@
 sg-snowprofile
 ==============
 
-Welcome to the SnowGeek Snow Profile creation too. The purpose of this tool
+Welcome to the SnowGeek Snow Profile creation tool. The purpose of this tool
 is to easily generate an image that represents the hardness profile of
 a snowpit using a simple text file as input.
 
@@ -14,6 +14,7 @@ surface. Below are the allowed hardnesses:
 F-, F, 4F-, 4F, 1F-, 1F, P-, P, K-, K
 
 Here is an example of a valid input file:
+
 0	F
 10	1F
 35	4F
