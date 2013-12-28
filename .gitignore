@@ -1,8 +1,8 @@
 *.py[cod]
-
+.DS_STORE
 # C extensions
 *.so
-
+*.spec
 # Packages
 *.egg
 *.egg-info
