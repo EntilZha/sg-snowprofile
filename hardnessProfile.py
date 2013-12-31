@@ -68,7 +68,7 @@ def createHardnessProfile(widths, heights):
     ax.set_xticklabels(HARDNESSES)
     ax.set_xlabel('Hardness')
     ax.set_ylabel('Depth (cm)')
-    ax.set_yticks(range(0, 101, 10))
+    ax.set_yticks(range(0, int(sum(heights)) + 1, 10))
     plt.gca().invert_yaxis()
     plt.show()
 
