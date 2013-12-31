@@ -12,10 +12,11 @@
 # about SnowGeek, please visit http://snowgeek.org/
 
 import re
-import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+import matplotlib.pyplot as plt
 from Tkinter import Tk
 from tkFileDialog import askopenfile
+from matplotlib.figure import Figure
 
 HARNDESS_CONVERSIONS = {
     'F-': 1, 'F': 2, '4F-': 3, '4F': 4, '1F-': 5, '1F': 6, 'P-': 7, 'P': 8, 'K-': 9, 'K': 10
@@ -31,14 +32,20 @@ COLOR_CONVERSIONS = {
 }
 
 
-def loadData():
-    root = Tk()
-    root.withdraw()
-    f = askopenfile('rU', parent=root)
-    #f = open(filename, 'rU')
+def loadData(filename=None):
+    if filename is None:
+        root = Tk()
+        root.withdraw()
+        f = askopenfile('rU', parent=root)
+    else:
+        f = open(filename, 'rU')
+    return parseDepthHardness(f)
+
+
+def parseDepthHardness(lines):
     pattern = re.compile(r'\s+')
     data = []
-    for line in f:
+    for line in lines:
         elements = pattern.split(line)
         depth = elements[0]
         hardness = elements[1]
@@ -53,24 +60,30 @@ def widthFromData(data):
     return widths
 
 
-def createHardnessProfile(widths, heights):
-    fig = plt.figure()
+def createHardnessProfile(widths, heights, show_plot=True):
+    if show_plot:
+        fig = plt.figure()
+    else:
+        fig = Figure()
     fig.clear()
-    ax = fig.add_axes([.2, .2, .6, .6])
+    fig.patch.set_facecolor('white')
+    ax = fig.add_subplot(1, 1, 1)
     currentHeight = 0
     for i in range(len(widths) - 1):
         color = COLOR_CONVERSIONS[widths[i]]
         patch = patches.Rectangle((0, 1.0 * currentHeight), 1.0 * widths[i], heights[i], color=color)
         currentHeight += heights[i]
         ax.add_patch(patch)
-    plt.title('Snow Profile Hardness by SnowGeek')
+    ax.set_title('Snow Profile Hardness by SnowGeek')
     ax.set_xticks(range(11))
     ax.set_xticklabels(HARDNESSES)
     ax.set_xlabel('Hardness')
     ax.set_ylabel('Depth (cm)')
     ax.set_yticks(range(0, int(sum(heights)) + 1, 10))
-    plt.gca().invert_yaxis()
-    plt.show()
+    ax.invert_yaxis()
+    if show_plot:
+        plt.show()
+    return fig
 
 
 def hardnessToNumber(hardness):
