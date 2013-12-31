@@ -11,10 +11,11 @@ Below is an example of a sample snowpit.
 
 The input file is formatted with two columns. It is assumed that 0 is at the
 surface. Below are the allowed hardnesses:
+
 F-, F, 4F-, 4F, 1F-, 1F, P-, P, K-, K
 
 Here is an example of a valid input file:
-
+```
 0	F
 10	1F
 35	4F
@@ -27,7 +28,7 @@ Here is an example of a valid input file:
 65	K
 70	4F
 100	4F
-
+```
 The first entry should be the starting depth, then the next should be the hardness. On the newline, enter what depth that layer extends to. NOTE: The last hardness should not matter, but it is still required by the program to be there.
 
 #Installation
